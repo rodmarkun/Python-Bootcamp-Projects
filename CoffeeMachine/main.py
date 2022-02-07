@@ -1,6 +1,3 @@
-from tabnanny import check
-
-
 MENU = {
     "espresso": {
         "ingredients": {
@@ -37,7 +34,8 @@ def main():
     money = 0.0
     cafe_menu = ['espresso', 'latte', 'cappuccino']
     print('Welcome to Rodmar\'s Coffee Machine! What would you like to drink?')
-    while True:
+    choice = ''
+    while True and choice != 'off':
         choice = input('Espresso: 1.5$ / Latte: 2.5$ / Cappuccino: 3.0$ :').lower()
         if choice in cafe_menu:
             if check_resources(choice):
