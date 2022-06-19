@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 import pyperclip
+import json
 import random
 
 WINDOW_HEIGHT = 300
@@ -32,15 +33,28 @@ def generate():
 
 def add():
 
+    website = website_entry.get()
+    email = email_user_entry.get()
+    password = password_entry.get()
+
+    new_data = {
+        website:  {
+            "email" : email,
+            "password" : password,
+        }
+    }
+
     if len(website_entry.get()) == 0 or len(email_user_entry.get()) == 0 or len(password_entry.get()) == 0:
         messagebox.showerror(title="Error", message="You have left one or more fields empty.")
     else:
-        confirm = messagebox.askokcancel(title="Confirm", message="Are you sure you wish to add this account information?")
-
-        if confirm:
-            f = open("password_manager.txt", "a")
-            f.write(f"{website_entry.get()} | {email_user_entry.get()} | {password_entry.get()} \n")
-            f.close()
+        data = new_data
+        try:
+            f = open("password_manager.json", "r")
+            data = json.load(f)
+            data.update(new_data)
+        finally:
+            f = open("password_manager.json", "w")
+            json.dump(data, f, indent=4)
             website_entry.delete(0, END)
             password_entry.delete(0, END)
 
