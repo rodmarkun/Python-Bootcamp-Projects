@@ -58,6 +58,24 @@ def add():
             website_entry.delete(0, END)
             password_entry.delete(0, END)
 
+# ---------------------------- Recover Data ------------------------------- #
+
+def find_password():
+    try:
+        f = open("password_manager.json", "r")
+        data = json.load(f)
+        website = website_entry.get()
+        try:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title="Success", message=f"Email: {email}\nPassword: {password}")
+        except KeyError:
+            messagebox.showerror(title="Error", message="No details for the website exists.")
+    except FileNotFoundError:
+        messagebox.showerror(title="Error", message="No data file found.")
+        pass
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 # Window
@@ -99,6 +117,9 @@ gen_password_button.grid(row=3, column=2)
 
 add_button = Button(text="Add", width=36, command=add)
 add_button.grid(row=4, column=1, columnspan=2)
+
+search_button = Button(text="Search", command=find_password, width=13)
+search_button.grid(row=1, column=2)
 
 canvas.grid(row=0, column=1)
 
