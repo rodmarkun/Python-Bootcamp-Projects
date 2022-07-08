@@ -18,7 +18,7 @@ current_card = {}
 def is_known():
     to_learn.remove(current_card)
     data = pandas.DataFrame(to_learn)
-    data.to_csv("data/words_to_learn.csv")
+    data.to_csv("data/words_to_learn.csv", index=False)
     new_word()
 
 def new_word():
